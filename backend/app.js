@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("Connected to MySQL Localhost!");
 });
 connection.query("USE interview_scalar");
 
@@ -30,7 +30,7 @@ app.get("/view-schedule", function (req, res) {
   });
 });
 
-// API to schedule another interview
+// API to schedule a new interview
 app.post("/add-interview", function (req, res) {
   var data = req.body.params;
   var intervieweeEmail = data.IntervieweeEmail;
@@ -45,8 +45,6 @@ app.post("/add-interview", function (req, res) {
     else {
       console.log(result);
       if (result.length === 0) {
-        console.log("hi");
-
         res.send(
           "No Interviewee exist with that email. Please enter the correct email."
         );
