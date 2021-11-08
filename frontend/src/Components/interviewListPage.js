@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Home from "./homePage";
+import { Table } from "react-bootstrap";
 import axios from "axios";
 
 const InterviewList = ({ history }) => {
@@ -15,20 +15,20 @@ const InterviewList = ({ history }) => {
   }, []);
 
   const handleClicked = (schedule) => {
-    history.push({ pathname: "/edit", state: { schedule } });
+    history.push({ pathname: "/edit-interview", state: { schedule } });
   };
   return (
     <div>
       <Link to="/"> Home Page </Link>
-      <table className="table table-bordered table-striped">
+      <Table striped bordered hover style={{ marginTop: "20px" }}>
         <thead>
           <tr>
             <th>Interview Id </th>
             <th>Interviewee Email </th>
             <th>Interviewer Email </th>
             <th>Date</th>
-            <th> Start time</th>
-            <th> End time </th>
+            <th>Start time</th>
+            <th>End time </th>
           </tr>
         </thead>
         <tbody>
@@ -38,16 +38,16 @@ const InterviewList = ({ history }) => {
               key={schedule.id}
               onClick={() => handleClicked(schedule)}
             >
-              <th>{schedule.id}</th>
-              <th>{schedule.Interviewee_email}</th>
-              <th>{schedule.Interviewer_email} </th>
-              <th>{schedule.date}</th>
-              <th>{schedule.start_time}</th>
-              <th> {schedule.end_time}</th>
+              <td>{schedule.id}</td>
+              <td>{schedule.Interviewee_email}</td>
+              <td>{schedule.Interviewer_email} </td>
+              <td>{schedule.date}</td>
+              <td>{schedule.start_time}</td>
+              <td>{schedule.end_time}</td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

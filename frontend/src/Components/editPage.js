@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Form,
   Button,
-  FormGroup,
-  FormControl,
-  ControlLabel,
+  Card,
 } from "react-bootstrap";
 import axios from "axios";
 
@@ -44,9 +42,9 @@ const EditPage = ({ history }) => {
 
   function handleButtonClicked() {
     if (!IntervieweeEmail) {
-      alert("Please enter IntervieweeEmail");
+      alert("Please enter Interviewee Email");
     } else if (!InterviewerEmail) {
-      alert("Please enter InterviewerEmail");
+      alert("Please enter Interviewer Email");
     } else if (!Date) {
       alert("Please enter Date of the Interview");
     } else if (!StartTime) {
@@ -54,7 +52,7 @@ const EditPage = ({ history }) => {
     } else if (!EndTime) {
       alert("Please enter End time of the Interview");
     } else {
-      var x = {
+      var data = {
         id: id,
         IntervieweeEmail: IntervieweeEmail,
         InterviewerEmail: InterviewerEmail,
@@ -63,16 +61,16 @@ const EditPage = ({ history }) => {
         Date: Date,
       };
       axios
-        .put(`http://localhost:8080/update-interview`, { params: x })
+        .put(`http://localhost:8080/update-interview`, { params: data })
         .then((res) => {
           if (res.data === "OK") {
+            alert("The Interview has been successfully updated according to the schedule");
             setIntervieweeEmail("");
             setInterviewerEmail("");
             setDate("");
             setStartTime("");
             setEndTime("");
             setid("");
-            alert("Interview has been successfully updated to the schedule");
             history.push("/view-schedule");
           } else {
             alert(res.data);
@@ -83,79 +81,90 @@ const EditPage = ({ history }) => {
 
   return (
     <div>
-      <Link to="/view-schedule"> Interview schedules </Link>
-      <h3>Please fill the details you want to change.</h3>
-      <Form.Group className="mb-3" controlId="IntervieweeEmail">
-        <Form.Label>Interviewee Email </Form.Label>
-        <Form.Control
-          type="email"
-          name="IntervieweeEmail"
-          value={IntervieweeEmail}
-          placeholder="Enter Interviewee email"
-          onChange={(e) => {
-            setIntervieweeEmail(e.target.value);
-          }}
-        />
-      </Form.Group>
+      <Link to="/view-schedule"> Interview List </Link>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Card style={{ width: "50%" }}>
+          <Card.Header as="h5">
+            Please add the details of the Interview.
+          </Card.Header>
+          <Card.Body>
+            <Form.Group className="mb-3" controlId="IntervieweeEmail">
+              <Form.Label>Interviewee Email </Form.Label>
+              <Form.Control
+                type="email"
+                name="IntervieweeEmail"
+                value={IntervieweeEmail}
+                placeholder="Enter interviewee email"
+                onChange={(e) => {
+                  setIntervieweeEmail(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Interviewer Email</Form.Label>
-        <Form.Control
-          type="email"
-          name="InterviewerEmail"
-          value={InterviewerEmail}
-          placeholder="Enter Interviewer Email"
-          onChange={(e) => {
-            setInterviewerEmail(e.target.value);
-          }}
-        />
-      </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Interviewer Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="InterviewerEmail"
+                value={InterviewerEmail}
+                placeholder="Enter interviewer Email"
+                onChange={(e) => {
+                  setInterviewerEmail(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Interviewer Date</Form.Label>
-        <Form.Control
-          type="email"
-          name="Date"
-          value={Date}
-          placeholder="DD/MM/YY Format"
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
-        />
-      </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Interviewer Date</Form.Label>
+              <Form.Control
+                type="text"
+                name="Date"
+                value={Date}
+                placeholder="DD/MM/YY Format"
+                onChange={(e) => {
+                  setDate(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>StartTime</Form.Label>
-        <Form.Control
-          type="email"
-          name="StartTime"
-          value={StartTime}
-          placeholder="14:00"
-          onChange={(e) => {
-            setStartTime(e.target.value);
-          }}
-        />
-      </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Start Time</Form.Label>
+              <Form.Control
+                type="text"
+                name="StartTime"
+                value={StartTime}
+                placeholder="14:00"
+                onChange={(e) => {
+                  setStartTime(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>EndTime</Form.Label>
-        <Form.Control
-          type="email"
-          name="EndTime"
-          value={EndTime}
-          placeholder="15:00"
-          onChange={(e) => {
-            setEndTime(e.target.value);
-          }}
-        />
-      </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>End Time</Form.Label>
+              <Form.Control
+                type="text"
+                name="EndTime"
+                value={EndTime}
+                placeholder="15:00"
+                onChange={(e) => {
+                  setEndTime(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Please Upload the Resume of Participant</Form.Label>
-        <Form.Control type="file" />
-      </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Please Upload the Resume of Interviewee</Form.Label>
+              <br />
+              <Form.Control type="file" />
+            </Form.Group>
 
-      <button onClick={handleButtonClicked}>Update</button>
+            <Button onClick={() => handleButtonClicked()} variant="primary">
+              Submit
+            </Button>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 };

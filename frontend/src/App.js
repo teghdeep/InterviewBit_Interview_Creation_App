@@ -12,7 +12,7 @@ class App extends Component {
     <Switch>
       <Route exact path='/view-schedule' component={InterviewList} />
       <Route exact path='/' component={HomePage} />
-      <Route exact path='/edit' component={EditPage} />
+      <Route exact path='/edit-interview' component={EditPage} />
     </Switch>
       </div>
     );
