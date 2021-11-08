@@ -117,7 +117,7 @@ const Home = (props) => {
                 type="text"
                 name="Date"
                 value={Date}
-                placeholder="DD/MM/YY Format"
+                placeholder="Enter the Date in this DD/MM/YY Format"
                 onChange={(e) => {
                   setDate(e.target.value);
                 }}
@@ -130,7 +130,7 @@ const Home = (props) => {
                 type="text"
                 name="StartTime"
                 value={StartTime}
-                placeholder="14:00"
+                placeholder="For example 17:00"
                 onChange={(e) => {
                   setStartTime(e.target.value);
                 }}
@@ -143,7 +143,7 @@ const Home = (props) => {
                 type="text"
                 name="EndTime"
                 value={EndTime}
-                placeholder="15:00"
+                placeholder="For example 18:00"
                 onChange={(e) => {
                   setEndTime(e.target.value);
                 }}
