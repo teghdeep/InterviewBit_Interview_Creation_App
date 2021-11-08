@@ -135,7 +135,6 @@ app.put("/update-interview", function (req, res) {
     else {
       console.log(result);
       if (result.length === 0) {
-        console.log("hi");
 
         res.send(
           "No Interviewee exist with that email. Please enter the correct email."
@@ -171,7 +170,6 @@ app.put("/update-interview", function (req, res) {
                     else {
                       console.log(result);
                       if (result.length === 0) {
-                        console.log("hi");
                         var sql =
                           "UPDATE Interviews set Interviewee_email =? , Interviewer_email = ? , start_time =?, end_time =? , date =?  where id = ?";
                         connection.query(
@@ -207,7 +205,7 @@ app.put("/update-interview", function (req, res) {
   });
 });
 
-// set port, listen for requests
+// listen to requests at port 8080
 app.listen(8080, () => {
   console.log("Server is running on port 8080.");
 });
