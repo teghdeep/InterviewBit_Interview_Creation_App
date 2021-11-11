@@ -6,6 +6,7 @@ import {
   Card,
 } from "react-bootstrap";
 import axios from "axios";
+import emailjs from "emailjs-com";
 
 const Home = (props) => {
   const [IntervieweeEmail, setIntervieweeEmail] = useState(
@@ -45,24 +46,24 @@ const Home = (props) => {
             alert("New Interview has been successfully added to the schedule");
 
             // Sending Email to both interviewer and participant using emailjs
-            // const templateId = "template_Tw30Kc0N";
-            // const messageHtml = `Your interview is scheduled with ${InterviewerEmail} at ${StartTime} to ${EndTime}`;
+            const templateId = "template_Tw30Kc0N";
+            const messageHtml = `Your interview is scheduled with ${InterviewerEmail} at ${StartTime} to ${EndTime}`;
 
-            // emailjs
-            // 	.send("gmail", templateId, {
-            // 		interviewer_name: InterviewerEmail, interviewee_name: IntervieweeEmail,
-            // 		message_html: messageHtml
-            // 	},"user_ao1fjbEs4m4L6RMefAfpI")
-            // 	.then((res) => {
-            // 		console.log("Email successfully sent!");
-            // 	})
-            // 	// Handle errors here however you like, or use a React error boundary
-            // 	.catch((err) =>
-            // 		console.error(
-            // 			"Oh well, you failed. Here some thoughts on the error that occured:",
-            // 			err
-            // 		)
-            // 	);
+            emailjs
+            	.send("gmail", templateId, {
+            		interviewer_name: InterviewerEmail, interviewee_name: IntervieweeEmail,
+            		message_html: messageHtml
+            	},"user_ao1fjbEs4m4L6RMefAfpI")
+            	.then((res) => {
+            		console.log("Email successfully sent!");
+            	})
+            	// Handle errors here however you like, or use a React error boundary
+            	.catch((err) =>
+            		console.error(
+            			"Oh well, you failed. Here some thoughts on the error that occured:",
+            			err
+            		)
+            	);
 
             setIntervieweeEmail("");
             setInterviewerEmail("");

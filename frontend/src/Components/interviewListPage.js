@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 
 const InterviewList = ({ history }) => {
@@ -17,6 +17,23 @@ const InterviewList = ({ history }) => {
   const handleClicked = (schedule) => {
     history.push({ pathname: "/edit-interview", state: { schedule } });
   };
+
+  const handleDelete = (id) =>{
+    axios.post(`http://localhost:8080/delete-interview`, { params: id })
+    .then((res)=>{
+      if(res.data === "OK"){
+        alert("The Interview is deleted");
+      }
+      else{
+        alert(res.data);
+      }
+    });
+
+    var dummy = schedules.filter((schedule)=>schedule.id !== id);
+    setSchedules(dummy);
+
+  }
+
   return (
     <div>
       <Link to="/"> Home Page </Link>
@@ -29,14 +46,13 @@ const InterviewList = ({ history }) => {
             <th>Date</th>
             <th>Start time</th>
             <th>End time </th>
+            <th>Options</th>
           </tr>
         </thead>
         <tbody>
           {schedules.map((schedule) => (
             <tr
-              style={{ cursor: "pointer" }}
               key={schedule.id}
-              onClick={() => handleClicked(schedule)}
             >
               <td>{schedule.id}</td>
               <td>{schedule.Interviewee_email}</td>
@@ -44,6 +60,8 @@ const InterviewList = ({ history }) => {
               <td>{schedule.date}</td>
               <td>{schedule.start_time}</td>
               <td>{schedule.end_time}</td>
+              <td><Button onClick={()=>handleDelete(schedule.id)}>Delete</Button>
+              <Button onClick={()=>handleClicked(schedule)}>Edit</Button></td>
             </tr>
           ))}
         </tbody>

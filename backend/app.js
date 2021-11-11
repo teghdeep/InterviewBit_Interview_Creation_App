@@ -30,6 +30,22 @@ app.get("/view-schedule", function (req, res) {
   });
 });
 
+app.post("/view-interview", function (req, res) {
+  var data = req.body.params;
+  var sql = "SELECT * FROM Interviews where id = ?";
+  connection.query(sql,[data], function (err, result, fields) {
+    if (err) throw err;
+    else {
+      if(result.length === 0){
+        res.send("No Interviews exist with this ID, please come back later");
+      }
+      else{
+        res.status(200).send({ table: result });
+      }
+    }
+  });
+});
+
 // API to schedule a new interview
 app.post("/add-interview", function (req, res) {
   var data = req.body.params;
@@ -61,6 +77,8 @@ app.post("/add-interview", function (req, res) {
                   "No Interviewer exist with that email. Please enter the correct email."
                 );
               } else {
+                // 15:00 - 18:00
+                // 17:00 - 17;30
                 var sql =
                   "SELECT * FROM Interviews where (interviewee_email=? or interviewer_email = ?) and date=? and (( end_time > ? and end_time <= ?) or ( start_time >= ? and start_time < ?))";
                 var query = connection.query(
@@ -117,6 +135,30 @@ app.post("/add-interview", function (req, res) {
     }
   });
 });
+
+app.post("/delete-interview", function(req, res){
+  var data = req.body.params;
+  var sql= "SELECT * FROM Interviews where id = ?";
+  connection.query(sql, [data], function(err,result,fields){
+    if(err) throw err;
+    else{
+      if(result.length===0){
+        res.send("No Interviews exist with the given ID");
+      }
+      else{
+        var sql2 = "delete from Interviews where id = ?";
+        connection.query(sql2,[data], function(err,result,fields){
+          if(err) throw err;
+          else{
+            console.log(result);
+          }
+        });
+        res.status(200).send("OK");
+      }
+    }
+  })
+})
+
 app.put("/update-interview", function (req, res) {
   console.log(req.body.params);
   var data = req.body.params;
